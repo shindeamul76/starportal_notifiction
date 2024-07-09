@@ -7,4 +7,8 @@ export const MONGO_URI = process.env.MONGO_URI || "mongodb://mongo:27017/auth-se
 
 export const JWT_SECRET = process.env.JWT_SECRET || "starportal_notification";
 
+export const KAFKA_BROKER = process.env.KAFKA_BROKER || "";
+
+export const NOTIFICATIONS_TOPIC = process.env.NOTIFICATIONS_TOPIC || "";
+
 
