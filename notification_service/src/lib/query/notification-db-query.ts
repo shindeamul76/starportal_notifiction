@@ -7,19 +7,19 @@ export const createNotificationQuery = async (data: any): Promise<INotification>
 }
 
 export const updateNotificationQuery = async (id: string, data: any): Promise<INotification | null> => {
-    return await Notification.findByIdAndUpdate(id, data, { new: true });
+    return await Notification.findOneAndUpdate({id:id, ...data}, { new: true });
 }
 
 export const deleteNotificationQuery = async (id: string): Promise<void> => {
-    await Notification.findByIdAndDelete(id);
+    await Notification.findOneAndDelete({id:id});
 }
 
 export const getNotificationByIdQuery = async (id: string): Promise<INotification | null> => {
-    return await Notification.findById(id);
+    return await Notification.findOne({id:id});
 }
 
 export const getNotificationsByUserIdQuery = async (userId: string): Promise<INotification[]> => {
-    return await Notification.find({ userId });
+    return await Notification.find({ userId: userId });
 }
 
 export const getAllNotificationsQuery = async (): Promise<INotification[]> => {
@@ -27,5 +27,5 @@ export const getAllNotificationsQuery = async (): Promise<INotification[]> => {
 }
 
 export const markNotificationAsReadQuery = async (id: string): Promise<INotification | null> => {
-    return await Notification.findByIdAndUpdate(id, { read: true }, { new: true });
+    return await Notification.findOneAndUpdate({id:id}, { read: true }, { new: true });
 }

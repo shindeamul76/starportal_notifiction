@@ -17,7 +17,7 @@ const schemaNotificationEditParams = z.object({
 });
 
 const schemaNotificationCreateParams = z.object({
-    id: z.string(),
+    id: z.string().optional(),
     userId: z.string(),
     message: z.string(),
   })

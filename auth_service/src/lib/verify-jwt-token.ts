@@ -26,10 +26,9 @@ export const verifyJWT = async (req: CustomRequest, res: Response, next: NextFun
     const secret = JWT_SECRET;
     const jwk = await importJWK({ k: secret, alg: 'HS256', kty: 'oct' });
 
+
     try {
         const { payload } = await jwtVerify(token, jwk);
-
-        console.log(payload, "pyload");
 
         req.user = payload as JWTPayload;
         next();

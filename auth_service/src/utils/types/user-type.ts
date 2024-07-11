@@ -10,7 +10,7 @@ export interface IUser extends Document {
 
 
 export type UserBaseType = {
-    id:string;
+    id?:string;
     username: string;
     password: string;
 };
@@ -28,9 +28,11 @@ export const USER_EXISTS = "User Already Exists";
 
 export const USER_CREATE_SUCCESS = "User Created Successfully";
 
+export const USER_UPDATE_SUCCESS = "User Updated Successfully";
+
 export const USER_FETCH_SUCCESS = "User Fetched Successfully";
 
-export const USER_DOES_NOT_EXISTS = "User Not Exists Please Register First";
+export const USER_DOES_NOT_EXISTS = "User Not Exists";
 
 export const INVALID_CREDENTIALS = "Invalid Credentials";
 

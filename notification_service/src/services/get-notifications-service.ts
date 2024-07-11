@@ -14,10 +14,8 @@ import { NOTIFICATION_FETCH_SUCCESS } from "@starportal/utils/types/notification
 export const getAllNotifications = asyncHandler(async (req: Request, res: Response) => {
 
     const userId = req.user.id
-
  
     const userNotifications = await getNotificationsByUserIdQuery(userId);
-
 
     const publicNotifications = userNotifications.map(notification => {
         const publicData = schemaNotificationReadPublic.parse(notification.toObject());

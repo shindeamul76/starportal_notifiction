@@ -21,7 +21,7 @@ app.use(urlencoded({ extended: true }));
 app.use(limiter);
 app.use(cors());
 
-app.use('/api/v1/auth', userRouters);
+app.use('/api/v1', userRouters);
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ message: 'User auth API!' });

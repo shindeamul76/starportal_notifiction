@@ -8,6 +8,8 @@ import { INotification, NOTIFICATION_CREATE_SUCCESS, NotificationReqBodyType } f
 import { ApiError } from "@starportal/utils/handlers/api-error-handler";
 import { schemaNotificationCreateBodyParams, schemaNotificationReadPublic } from "@starportal/lib/validations/notification-validation";
 import { createNotificationQuery } from "@starportal/lib/query/notification-db-query";
+import { KafkaClient } from "@starportal/lib/Kafka/Kafka";
+import { getMessageCount } from "@starportal/lib/Kafka/admin-kafka";
 
 
 
@@ -20,6 +22,12 @@ export const createNotification = asyncHandler(async (req: Request, res: Respons
 
     const publicData = schemaNotificationReadPublic.parse(newNotification)
 
+     const kafkaClient = KafkaClient.getInstance();
+
+
+     await kafkaClient.send(JSON.stringify(publicData));
+
+     getMessageCount().catch(console.error);
 
     return res.status(StatusCodes.CREATED).json(
         new ApiResponse(
