@@ -27,11 +27,19 @@ export class KafkaClient {
   }
 
   async send(message: string) {
-    await this.producer.send({
-      topic: NOTIFICATIONS_TOPIC,
-      messages: [
-        { value: message },
-      ],
-    });
+
+    try {
+
+      await this.producer.send({
+        topic: NOTIFICATIONS_TOPIC,
+        messages: [
+          { value: message },
+        ],
+      });
+      console.log(`Message sent successfully: ${message}`);
+    } catch (error: any) {
+      console.error(`Error sending message: ${error.message}`);
+    }
+    
   }
 }

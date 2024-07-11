@@ -27,7 +27,7 @@ export const schemaUserLoginParams = z.object({
 });
 
 const schemaUserCreateParams = z.object({
-    id: z.string(),
+    id: z.string().optional(),
     email: z.string().email().toLowerCase(),
     username: z.string(),
     password: z.string().min(6),

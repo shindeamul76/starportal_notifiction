@@ -30,7 +30,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
     };
   
     const token = await generateJWT({
-        id: existingUser._id
+        id: existingUser.id
     });
 
     return res.status(StatusCodes.CREATED).json(

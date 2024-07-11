@@ -32,6 +32,8 @@ export const verifyJWT = async (req: CustomRequest, res: Response, next: NextFun
         console.log(payload, "pyload");
 
         req.user = payload as JWTPayload;
+        console.log(req.user, "req.user");
+        
         next();
     } catch (error) {
         return res.status(StatusCodes.UNAUTHORIZED).json({ message: AUTHENTICATION_FAILED });

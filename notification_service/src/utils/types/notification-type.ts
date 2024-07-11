@@ -10,7 +10,7 @@ export interface INotification extends Document {
 
 
 export type NotificationBaseType = {
-  id: string;
+  id?: string;
   userId: string;
   message: string;
 };
