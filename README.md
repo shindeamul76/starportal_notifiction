@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="/assets/startportal.jpg"  width="100%" height="300" alt="starportal-logo" />
+  <img src="/assets/startportal.jpg"  width="200" height="200" alt="starportal-logo" />
 
   <h1>Microservices-Based Real-Time Notification System</h1>
 
@@ -76,3 +76,9 @@ Here is what you need to be able to run my_Indiaa_e_comm.
 5. Quick start with yarn
 
           npm run start:dev
+
+### Client
+
+```bash
+    run index.html file to see the notications in real-time
+```

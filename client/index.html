@@ -1,23 +1,18 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Simple WS Client</title>
+        <title>Real-Time Notifications</title>
         <script>
             const webSocket = new WebSocket("ws://localhost:8080/?jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjNmM2IxN2M2LTRkNTUtNDU0OC05M2U5LTU3ODY5MzlhYWYyMyIsImlhdCI6MTcyMDcwOTMwNywiZXhwIjoxNzUyMjQ1MzA3fQ.evtbKoTmac7NNA-Ado5oYKPG-q9bySYKgHfetNBBTkE");
-            function sendMessage() {
-                webSocket.send(JSON.stringify({
-                    type: "message",
-                    payload: {
-                        message: document.getElementById("inputbox").value
-                    }
-                }));
-            }
+
             webSocket.onmessage = function (event) {
                 const data = JSON.parse(event.data);
-                if (data.type === "message") {
+                if (data.type === "notification") {
                     document.getElementById("serverMessages").appendChild(document.createTextNode(data.payload.message));
                     document.getElementById("serverMessages").appendChild(document.createElement("br"));
                 }
             }
+
             webSocket.onopen = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const roomId = urlParams.get('roomId');
@@ -32,11 +27,8 @@
         </script>
     </head>
     <body>
-        <input type="text" id="inputbox" />
-        <button onclick="sendMessage()">send</button>
-        <br/><br/>
         <h2>
-            Events from server
+            Notifications from server
         </h2>
         <div id="serverMessages">
 
