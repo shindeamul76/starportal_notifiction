@@ -3,7 +3,6 @@ import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import { userRouters } from "@starportal/routes/user-route";
-// import { verifyJWT } from '@myIndiaa/middlewares/verify-jwt-middleware';
 import rateLimit from 'express-rate-limit';
 
 

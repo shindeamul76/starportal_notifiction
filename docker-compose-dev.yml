@@ -10,7 +10,7 @@ services:
       - JWT_SECRET=starportal_notification
     depends_on:
       - mongo-auth
-      
+
   notification-service:
     build: ./notification_service
     ports:
@@ -47,22 +47,24 @@ services:
       - mongo-notification-data:/data/db
 
   kafka:
-    image: confluentinc/cp-kafka:7.2.1
+    image: apache/kafka:3.7.1
+    container_name: my-kafka-container  
     ports:
       - "9092:9092"
     environment:
-      KAFKA_KRAFT_MODE: "true"
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9092
-      KAFKA_LOG_DIRS: /var/lib/kafka/data
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_MIN_INSYNC_REPLICAS: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@localhost:9092
+      KAFKA_CFG_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_CFG_MIN_INSYNC_REPLICAS: 1
+      KAFKA_CFG_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CFG_ZOOKEEPER_CONNECT: ""
+      KAFKA_CFG_NO_ZOOKEEPER: "true"
     volumes:
       - kafka-data:/var/lib/kafka/data
 
