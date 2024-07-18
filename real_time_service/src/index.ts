@@ -3,12 +3,12 @@ import http from "http";
 import { initializeWebSocketServer, userConnections } from "./websocket";
 import { PORT } from "./config";
 import { app } from "./app";
-// import { KafkaClient } from "./Kafka/Kafka";
+import { KafkaClient } from "./Kafka/Kafka";
 import { getMessageCount } from "./Kafka/admin-kafka";
 
 const server = http.createServer(app);
 
-// const kafkaClientIn = KafkaClient.getInstance();
+const kafkaClientIn = KafkaClient.getInstance();
 
 // Initialize WebSocket server
 initializeWebSocketServer(server);
@@ -26,5 +26,5 @@ process.on("uncaughtException", (err) => {
 
 server.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
-  // kafkaClientIn.runConsumer(userConnections).catch(console.error);
+  kafkaClientIn.runConsumer(userConnections).catch(console.error);
 });

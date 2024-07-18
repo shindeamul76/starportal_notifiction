@@ -1,5 +1,7 @@
 import { Kafka, Producer } from "kafkajs";
-import { KAFKA_BROKER, NOTIFICATIONS_TOPIC } from "@starportal/main/config";
+import { CLIENT_ID, KAFKA_BROKER, NOTIFICATIONS_TOPIC } from "@starportal/main/config";
+
+console.log(KAFKA_BROKER, "KAFKA_BROKER")
 
 export class KafkaClient {
   private producer: Producer;
@@ -7,7 +9,7 @@ export class KafkaClient {
 
   private constructor() {
     const kafka = new Kafka({
-      clientId: "notification-service",
+      clientId: CLIENT_ID,
       brokers: [KAFKA_BROKER],
     });
 
@@ -27,7 +29,7 @@ export class KafkaClient {
   }
 
   async send(message: string) {
-
+    console.log(KAFKA_BROKER, "KAFKA_BROKER_INSIDE_SEND")
     try {
 
       await this.producer.send({

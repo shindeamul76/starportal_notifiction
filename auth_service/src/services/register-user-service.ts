@@ -6,7 +6,7 @@ import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { IUser, USER_CREATE_SUCCESS, USER_EXISTS, UserReqBodyType } from "@starportal/utils/types/user-type";
 import { ApiError } from "@starportal/utils/handlers/api-error-handler";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs";
 import { schemaUserCreateBodyParams, schemaUserReadPublic } from "@starportal/lib/validations/user-validation";
 import { getUserByEmailOrUsernameQuery, registerUserQuery } from "@starportal/lib/query/user-db-query";
 

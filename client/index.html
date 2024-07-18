@@ -2,14 +2,47 @@
 <html>
     <head>
         <title>Real-Time Notifications</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            #serverMessages {
+                border: 1px solid #ccc;
+                padding: 10px;
+                max-width: 500px;
+                margin-top: 20px;
+                background-color: #f9f9f9;
+            }
+            .notification {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #e3f2fd; 
+                color: #333;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .notification.new {
+                border-color: #2196f3; 
+            }
+        </style>
         <script>
-            const webSocket = new WebSocket("ws://localhost:8080/?jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjNmM2IxN2M2LTRkNTUtNDU0OC05M2U5LTU3ODY5MzlhYWYyMyIsImlhdCI6MTcyMDcwOTMwNywiZXhwIjoxNzUyMjQ1MzA3fQ.evtbKoTmac7NNA-Ado5oYKPG-q9bySYKgHfetNBBTkE");
+            const webSocket = new WebSocket("ws://localhost:8080/?jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUzMGU1MzNmLTVhNWEtNDY1YS05N2FhLWFkMDdkNDVjZmQzMyIsImlhdCI6MTcyMTI5MjUzOCwiZXhwIjoxNzUyODI4NTM4fQ.AUUNvVy0J3VTcdZK2mx2ali2Pq3CJ6Q3dRAVXkrRP8o");
 
             webSocket.onmessage = function (event) {
                 const data = JSON.parse(event.data);
-                if (data.type === "notification") {
-                    document.getElementById("serverMessages").appendChild(document.createTextNode(data.payload.message));
-                    document.getElementById("serverMessages").appendChild(document.createElement("br"));
+                if (data) {
+                    const messageElement = document.createElement("div");
+                    messageElement.classList.add("notification", "new");
+                    messageElement.innerText = data.message;
+
+                    const serverMessages = document.getElementById("serverMessages");
+                    serverMessages.appendChild(messageElement);
+
+                    setTimeout(() => {
+                        messageElement.classList.remove("new");
+                    }, 1000);
                 }
             }
 
@@ -23,7 +56,6 @@
                     }
                 }));
             }
-
         </script>
     </head>
     <body>
@@ -31,7 +63,7 @@
             Notifications from server
         </h2>
         <div id="serverMessages">
-
+            <!-- Notifications will appear here -->
         </div>
     </body>
 </html>
