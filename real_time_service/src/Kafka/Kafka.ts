@@ -1,6 +1,7 @@
 import { Kafka, Consumer, EachMessagePayload, logLevel } from "kafkajs";
 import { KAFKA_BROKER, NOTIFICATIONS_TOPIC, GROUP_ID, CLIENT_ID } from "../config";
 import { WebSocket as WSWebSocket } from "ws"; 
+import { markAsReadMessage } from "../User/mark-as-read-message";
 
 
 export class KafkaClient {
@@ -55,6 +56,7 @@ export class KafkaClient {
             if (ws) {              
               if (ws.readyState === ws.OPEN) {              
                 ws.send(messageValue);
+                markAsReadMessage(parsedMessage.id)
               } else {
                 console.log(`WebSocket not open for user: ${userId}`);
               }

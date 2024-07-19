@@ -28,7 +28,7 @@
             }
         </style>
         <script>
-            const webSocket = new WebSocket("ws://localhost:8080/?jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUzMGU1MzNmLTVhNWEtNDY1YS05N2FhLWFkMDdkNDVjZmQzMyIsImlhdCI6MTcyMTI5MjUzOCwiZXhwIjoxNzUyODI4NTM4fQ.AUUNvVy0J3VTcdZK2mx2ali2Pq3CJ6Q3dRAVXkrRP8o");
+            const webSocket = new WebSocket("ws://localhost:8080/?jwt=eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUzMGU1MzNmLTVhNWEtNDY1YS05N2FhLWFkMDdkNDVjZmQzMyIsImlhdCI6MTcyMTM3NTk1MSwiZXhwIjoxNzUyOTExOTUxfQ.FY9tD8gJdTrCrb3H34onqs8cPQRVkvbuSCLyLn_5Ljs");
 
             webSocket.onmessage = function (event) {
                 const data = JSON.parse(event.data);

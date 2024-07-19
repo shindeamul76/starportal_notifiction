@@ -15,7 +15,11 @@ export const getAllNotifications = asyncHandler(async (req: Request, res: Respon
 
     const userId = req.user.id
  
-    const userNotifications = await getNotificationsByUserIdQuery(userId);
+    const { page=1, limit=10 } = req.query;
+
+    const skip = (Number(page) - 1) * (Number(limit));
+
+    const userNotifications = await getNotificationsByUserIdQuery(userId, skip, Number(limit));
 
     const publicNotifications = userNotifications.map(notification => {
         const publicData = schemaNotificationReadPublic.parse(notification.toObject());

@@ -18,8 +18,8 @@ export const getNotificationByIdQuery = async (id: string): Promise<INotificatio
     return await Notification.findOne({id:id});
 }
 
-export const getNotificationsByUserIdQuery = async (userId: string): Promise<INotification[]> => {
-    return await Notification.find({ userId: userId });
+export const getNotificationsByUserIdQuery = async (userId: string, skip: number, limit: number): Promise<INotification[]> => {
+    return await Notification.find({ userId: userId }).skip(skip).limit(limit);
 }
 
 export const getAllNotificationsQuery = async (): Promise<INotification[]> => {
