@@ -33,7 +33,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
         id: existingUser.id
     });
 
-    return res.status(StatusCodes.CREATED).json(
+    return res.status(StatusCodes.OK).json(
         new ApiResponse(
             StatusCodes.OK,
             {token: token},

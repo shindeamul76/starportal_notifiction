@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Real-Time Notifications</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            #serverMessages {
+                border: 1px solid #ccc;
+                padding: 10px;
+                max-width: 500px;
+                margin-top: 20px;
+                background-color: #f9f9f9;
+            }
+            .notification {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #e3f2fd; 
+                color: #333;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .notification.new {
+                border-color: #2196f3; 
+            }
+        </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const token = localStorage.getItem("jwtToken");
+                if (!token) {
+                    window.location.href = 'login.html';
+                } else {
+                    connectWebSocket(token);
+                    fetchNotifications(token);
+                }
+
+                function connectWebSocket(token) {
+                    const webSocket = new WebSocket("ws://localhost:8080/?jwt=" + token);
+
+                    webSocket.onmessage = function (event) {
+                        const data = JSON.parse(event.data);
+                        console.log('WebSocket message received:', data); // Debugging line
+                        if (data) {
+                            displayNotification(data.message);
+                        }
+                    }
+
+                    webSocket.onopen = () => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const roomId = urlParams.get('roomId');
+                        webSocket.send(JSON.stringify({
+                            type: 'join',
+                            payload: {
+                                roomId: roomId
+                            }
+                        }));
+                    }
+                }
+
+                function fetchNotifications(token) {
+                    fetch('http://localhost:5000/api/v1/notifications', {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Fetched notifications:', data); // Debugging line
+                        data.data.forEach(notification => {
+                            displayNotification(notification.message);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching notifications:', error);
+                    });
+                }
+
+                function displayNotification(message) {
+                    const serverMessages = document.getElementById("serverMessages");
+                    if (serverMessages) {
+                        const messageElement = document.createElement("div");
+                        messageElement.classList.add("notification", "new");
+                        messageElement.innerText = message;
+
+                        serverMessages.insertBefore(messageElement, serverMessages.firstChild);
+
+                        setTimeout(() => {
+                            messageElement.classList.remove("new");
+                        }, 1000);
+                    } else {
+                        console.error("serverMessages element not found");
+                    }
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <h2>Notifications from server</h2>
+        <div id="serverMessages">
+            <!-- Notifications will appear here -->
+        </div>
+    </body>
+</html>

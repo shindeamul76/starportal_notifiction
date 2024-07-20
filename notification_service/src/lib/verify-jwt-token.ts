@@ -29,10 +29,7 @@ export const verifyJWT = async (req: CustomRequest, res: Response, next: NextFun
     try {
         const { payload } = await jwtVerify(token, jwk);
 
-        console.log(payload, "pyload");
-
         req.user = payload as JWTPayload;
-        console.log(req.user, "req.user");
         
         next();
     } catch (error) {

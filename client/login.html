@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            .form-container {
+                max-width: 300px;
+                margin: 20px auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .form-container h3 {
+                margin-bottom: 15px;
+            }
+            .form-container input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .form-container button {
+                width: 100%;
+                padding: 10px;
+                background-color: #2196f3;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .form-container a {
+                display: block;
+                text-align: center;
+                margin-top: 10px;
+                color: #2196f3;
+                text-decoration: none;
+            }
+        </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("loginForm").addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    const email = event.target.email.value;
+                    const password = event.target.password.value;
+
+                    fetch('http://localhost:5001/api/v1/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.data.token) {
+                            localStorage.setItem("jwtToken", data.data.token);
+                            window.location.href = 'notifications.html';
+                        } else {
+                            alert("Login failed!");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error during login:', error);
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="form-container">
+            <h3>Login</h3>
+            <form id="loginForm">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <a href="register.html">Don't have an account? Register</a>
+        </div>
+    </body>
+</html>
